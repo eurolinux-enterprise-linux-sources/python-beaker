@@ -2,7 +2,7 @@
 
 Name: python-beaker
 Version: 1.3.1
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: WSGI middleware layer to provide sessions
 
 Group: Development/Languages
@@ -15,6 +15,7 @@ BuildRequires: python-setuptools-devel
 Patch0: beaker-hmac2.4.patch
 Patch1: %{name}-absimport.patch
 Patch2: %{name}-middleware-config.patch
+Patch3: bz983292-Session-id-based-on-sha1-base64-instead-of-md5-2.patch
 
 %description
 Beaker is a caching library that includes Session and Cache objects built on
@@ -27,6 +28,7 @@ manage Session objects and signed cookies.
 %patch0 -p1 -b .hashlib
 %patch1 -p0 -b .absimport
 %patch2 -p1 -b .middleconfig
+%patch3 -p1 -b .bz983292
 
 
 %build
@@ -50,6 +52,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 6 2013 Jan Pokorny <jpokorny@redhat.com> - 1.3.1-7
+- Fix python-beaker does not work in FIPS environment
+Resolves: rhbz#983292
+Related:  rhbz#956360
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.1-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
