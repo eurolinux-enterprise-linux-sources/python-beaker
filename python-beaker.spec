@@ -10,7 +10,7 @@
 
 Name: python-beaker
 Version: 1.5.4
-Release: 10%{?dist}
+Release: 9%{?dist}
 Summary: WSGI middleware layer to provide sessions
 
 Group: Development/Languages
@@ -140,9 +140,6 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.5.4-10
-- Mass rebuild 2013-12-27
-
 * Thu Aug 15 2013 Matej Stuchlik <mstuchli@redhat.com> - 1.5.4-9
 - Removed python-crypto from Requires
 Resolves: rhbz#997326
