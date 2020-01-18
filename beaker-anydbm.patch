@@ -1,0 +1,12 @@
+Index: Beaker-1.5.4/beaker/container.py
+===================================================================
+--- Beaker-1.5.4.orig/beaker/container.py
++++ Beaker-1.5.4/beaker/container.py
+@@ -1,5 +1,6 @@
+ """Container and Namespace classes"""
+-import anydbm
++# For python3 (will be converted as import dbsm as anydbm)
++import anydbm as anydbm
+ import cPickle
+ import logging
+ import os

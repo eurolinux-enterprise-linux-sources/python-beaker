@@ -1,0 +1,40 @@
+--- beaker/session.py.orig	2010-06-16 21:39:49.000000000 +0200
++++ beaker/session.py	2013-08-13 13:03:01.662618580 +0200
+@@ -4,7 +4,7 @@
+ import time
+ from datetime import datetime, timedelta
+     
+-from beaker.crypto import hmac as HMAC, hmac_sha1 as SHA1, md5
++from beaker.crypto import hmac as HMAC, hmac_sha1 as SHA1, sha1
+ from beaker.util import pickle
+ 
+ from beaker import crypto
+@@ -121,10 +121,10 @@
+                     raise
+         
+     def _create_id(self):
+-        self.id = md5(
+-            md5("%f%s%f%s" % (time.time(), id({}), random.random(),
+-                              getpid())).hexdigest(), 
+-        ).hexdigest()
++        self.id = b64encode(
++                sha1("%f%s%f%s" % (time.time(), id({}), random.random(),
++                              getpid())).digest() 
++        ).replace('+','-').replace('/','_').rstrip('=')
+         self.is_new = True
+         self.last_accessed = None
+         if self.use_cookies:
+@@ -447,10 +447,9 @@
+             return pickle.loads(data)
+     
+     def _make_id(self):
+-        return md5(md5(
+-            "%f%s%f%s" % (time.time(), id({}), random.random(), getpid())
+-            ).hexdigest()
+-        ).hexdigest()
++        return b64encode(
++                sha1("%f%s%f%s" % (time.time(), id({}), random.random(), getpid())
++                    ).digest()).replace('+','-').replace('/','_').rstrip('=')
+     
+     def save(self, accessed_only=False):
+         """Saves the data for this session to persistent storage"""
